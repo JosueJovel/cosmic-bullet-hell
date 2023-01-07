@@ -144,5 +144,5 @@ PackageBackups/
 /UWP/*
 
 #misc
-.vscode\settings.json
-ProjectSettings\ShaderGraphSettings.asset
+ProjectSettings/ShaderGraphSettings.asset
+.vscode/settings.json
