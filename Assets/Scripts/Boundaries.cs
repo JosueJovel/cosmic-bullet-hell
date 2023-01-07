@@ -21,7 +21,7 @@ public class Boundaries : MonoBehaviour
         //The following code block makes sure to keep the object withing the bounds of the given camera bounds from earlier.
         Vector3 viewPos = transform.position;
         viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x * -1 + objectWidth, screenBounds.x - objectWidth);
-        viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight - 2);
+        viewPos.y = Mathf.Clamp(viewPos.y, screenBounds.y * -1 + objectHeight, screenBounds.y - objectHeight - 1);
         transform.position = viewPos;
 
     }

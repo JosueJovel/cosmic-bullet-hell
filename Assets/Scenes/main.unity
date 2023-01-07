@@ -252,7 +252,9 @@ GameObject:
   - component: {fileID: 1565743946}
   - component: {fileID: 1565743945}
   - component: {fileID: 1565743944}
-  - component: {fileID: 1565743943}
+  - component: {fileID: 1565743947}
+  - component: {fileID: 1565743949}
+  - component: {fileID: 1565743950}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -260,19 +262,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1565743943
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1565743942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63647f579e7fc6544b16dd5d6e4b5471, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: {x: 7, y: 7}
 --- !u!60 &1565743944
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -368,6 +357,56 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1565743947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565743942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d1518266c05f4c4891e1cb8b1a3f4e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!50 &1565743949
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565743942}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!114 &1565743950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1565743942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdb50f292ac2aa74c9d68cb1200f4b65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  rb: {fileID: 1565743949}
+  dashSpeed: 10
+  dashlength: 1
+  dashCooldown: 0.3
 --- !u!1 &1974388274
 GameObject:
   m_ObjectHideFlags: 0
