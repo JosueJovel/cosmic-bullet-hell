@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void Dash() {
-        if (Input.GetKeyDown(KeyCode.Space)){
+        if (/*Input.GetKeyDown(KeyCode.Space) ||*/ Input.GetButton("Fire1")){
             if ((moveDirection != Vector2.zero) && dashCountdown <= 0 && dashCooldownCountdown <= 0) {    //A dash may only start if A. The player is holding a direction, B. There is no dash currently ongoing, and C. The cooldown after a dash has ended.
                 activeMoveSpeed = dashSpeed;
                 dashCountdown = dashlength;
@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
             dashCountdown -= Time.deltaTime;
 
-            if (dashCountdown <= 0 || !Input.GetKey(KeyCode.Space)){        //Once the active part of the dash finally ends OR the player stops holding dash, reset the move speed back to normal speed, and start the dash cooldown (to prevent dash abuse)
+            if (dashCountdown <= 0 || /*!Input.GetKey(KeyCode.Space) ||*/ !Input.GetButton("Fire1")){        //Once the active part of the dash finally ends OR the player stops holding dash, reset the move speed back to normal speed, and start the dash cooldown (to prevent dash abuse)
                 dashCountdown = 0;                                          //SELF NOTE FOR JOSUE: Dash cooldown mechanic entirely may be irrelevant if I opt to go for the dash resource option instead                  
                 activeMoveSpeed = moveSpeed;                                //additionally, if the ship stops moving in a direction at any point, the dash prematurely ends and cooldown starts
                 dashCooldownCountdown = dashCooldown;
