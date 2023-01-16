@@ -27,12 +27,13 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessInputs();
         Dash();
+        Move();
 
     }
 
     //FixedUpdate is called a set amount of times per loop, better for consistency, such as physics calculations.
     void FixedUpdate() {
-        Move();
+        
     }
 
     void ProcessInputs(){                                       //This is a function that, every time its called, takes in all directional inputs currently being sent
