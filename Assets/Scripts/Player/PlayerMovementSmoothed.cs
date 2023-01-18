@@ -7,25 +7,28 @@ public class PlayerMovementSmoothed : MonoBehaviour
     // Start is called before the first frame update
 
     //GENERAL MOVEMENT
-    public float moveSpeed = 5;  //a scalar that dictates how fast an object will move by default
-    private float activeMoveSpeed;  
-    public Rigidbody2D rb;   //this is the player's own rigidbody component being referenced here
+    public float moveSpeed = 5;  //a scalar that dictates how fast the player will move by default
+    private float activeMoveSpeed;  //variable for player movement speed, because during gameplay the player's speed will change constantly
+    public Rigidbody2D rb;   //this is the player's own rigidbody component being referenced
     private Vector2 moveDirection;    //a vector that dictates the direction that player will be moving
 
     //SMOOTHDAMP
     private Vector2 smoothedDirection;  //Vector that will represent the intermediary vector between changing directions
     private Vector2 smoothedVelocity;   //Vector required for the Smoothdamp function to use as a reference for calculations
-    public float rateOfDirectionChange = .01f;  //How fast to transition between vectors (in seconds)
+    public float rateOfDirectionChange = .007f;  //How fast to transition between vectors (in seconds)
 
 
 
 
     //DASH
     public float dashSpeed = 10;   //how much faster ship should move during a dash
-    public float dashlength = 1f;  //how long the dash should last
+    public float dashlength = .5f;  //how long the dash should last
     public float dashCooldown = .3f;  //how long to wait before being allowed to dash again
+    public float dashSlowdown = 1f;   //length of the dash's "Slowdown" phase
     private float dashCountdown;        //this variable will keep track of how much time is left for a dash to be active
     private float dashCooldownCountdown;   //this keeps track of how much time is left for the dash cooldown to end
+    private float dashSlowdownCountdown;   //keeps track of time left for the slowdown phase
+    private float slowdownRate;         //derived value dictating how much to slow down the player (per frame) during the slowdown part of the dash
    
    
     //SPRITE
@@ -35,6 +38,7 @@ public class PlayerMovementSmoothed : MonoBehaviour
 
     private void Start() {
         activeMoveSpeed = moveSpeed;
+        slowdownRate = ((dashSpeed - moveSpeed) * 2f);  //Higher scalar = velocity will decrease faster/sooner
         sprite = GetComponent<SpriteRenderer>();
     }
     void Update()
@@ -65,9 +69,6 @@ public class PlayerMovementSmoothed : MonoBehaviour
 
         rb.velocity = smoothedDirection * activeMoveSpeed;
         //This is the velocity form of movement. It is extremely similiar to the rb.moveposition method of movement. As with regular vectors, it is calculated simply by multiplying direction and magnitude.
-        //POTENTIAL TODO: Consider adding a tiny delay to when the player object should stop moving whenever the direction is 0
-        //This is because as it stands, movement feels stuttery because when pressing keys fast, keys on opposite sides will sometimes cancel each other out, causing slight stutters in movement.
-        //OTHER SOLUTION: Somehow find a way to only consider the last two keys being pressed. This would fix the issue of accidentally holding two oppsite keys during swift maneuvers
 
 
         
@@ -75,10 +76,13 @@ public class PlayerMovementSmoothed : MonoBehaviour
 
     void Dash() {
         if (Input.GetButton("Fire1")){
-            if ((moveDirection != Vector2.zero) && dashCountdown <= 0 && dashCooldownCountdown <= 0) {    //A dash may only start if A. The player is holding a direction, B. There is no dash currently ongoing, and C. The cooldown after a dash has ended.
+            if (dashCountdown <= 0 && dashCooldownCountdown <= 0) {    //A dash may only start if A. There is no dash currently ongoing, and B. The cooldown after a dash has ended.
+                dashSlowdownCountdown = 0;  //interrupts slowdown if still in progress
                 activeMoveSpeed = dashSpeed;
-                dashCountdown = dashlength;
-                //TODO: Make the last part of the dash to be a somewhat gradual slowdown, so that decelartion is a gradient and not instant. This will effectively lengthing the dash, and therefore invulnerability, which is good.
+                dashCountdown = dashlength;           
+                //TODO: WHen health system properly implemented, also implement invulnerability here. may need to give ship a new boolean state of "invulnerable: T or F"
+                //To do the above, will likely need to call  co routine here that seperately grants the player invulnerability. Note, teh invuln will last a little longer than the first phase of the dash
+                //GOAL: Make Invulnerability last about a third of a second. Because of smoothdamp behavior, may need to either shorten this phase of the dash length, or see if smoothdamp can kick in sooner.
                 sprite.color = new Color (0, 0, 1, 1); //Changes player color while dashing, mostly used for testing reasons
             }
         }
@@ -88,11 +92,20 @@ public class PlayerMovementSmoothed : MonoBehaviour
 
             dashCountdown -= Time.deltaTime;
 
-            if (dashCountdown <= 0 || !Input.GetButton("Fire1")){        //Once the active part of the dash finally ends OR the player stops holding dash, reset the move speed back to normal speed, and start the dash cooldown (to prevent dash abuse)
-                dashCountdown = 0;                                          //SELF NOTE FOR JOSUE: Dash cooldown mechanic entirely may be irrelevant if I opt to go for the dash resource option instead                  
-                activeMoveSpeed = moveSpeed;                                //additionally, if the ship stops moving in a direction at any point, the dash prematurely ends and cooldown starts
-                dashCooldownCountdown = dashCooldown;
-                sprite.color = new Color (1, 1, 1, 1);                      //SELF NOTE FOR JOSUE: Consider adding a small delay between dash ending and invulnerability/speed ending, to account for human reaction times, and to be a little more forgiving in general
+            if (dashCountdown <= 0){                //Once the active part of the dash finally ends, gradually slow the player back to normal speed, and start the dash cooldown (to prevent dash abuse)
+                dashSlowdownCountdown = dashSlowdown;               
+                sprite.color = new Color (1, 1, 1, 1);        //resets the player color, again for testing reasons       
+                dashCooldownCountdown = dashCooldown;                
+            }
+        }
+
+        if (dashSlowdownCountdown > 0) {
+            dashSlowdownCountdown -= Time.deltaTime;
+            activeMoveSpeed = Mathf.MoveTowards(activeMoveSpeed, moveSpeed, slowdownRate * Time.deltaTime); //The ship gradually slows down after the dash to give a feeling of smooth decelartion, instead of instant velocity changing.
+            //NOTE: Slowdown dictates for how long the above MoveTowards will run. So if slowdown phase is really short, the movetowards will run for very little, leading to more sudden snap back to regular speed
+
+            if (dashSlowdownCountdown <= 0) {      
+                activeMoveSpeed = moveSpeed;                  
             }
         }
 
