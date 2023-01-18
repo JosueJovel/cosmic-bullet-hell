@@ -25,6 +25,7 @@ public class PlayerMovementSmoothed : MonoBehaviour
     public float dashlength = .5f;  //how long the dash should last
     public float dashCooldown = .3f;  //how long to wait before being allowed to dash again
     public float dashSlowdown = 1f;   //length of the dash's "Slowdown" phase
+    public float slowdownScalar = 2.4f;
     private float dashCountdown;        //this variable will keep track of how much time is left for a dash to be active
     private float dashCooldownCountdown;   //this keeps track of how much time is left for the dash cooldown to end
     private float dashSlowdownCountdown;   //keeps track of time left for the slowdown phase
@@ -38,7 +39,7 @@ public class PlayerMovementSmoothed : MonoBehaviour
 
     private void Start() {
         activeMoveSpeed = moveSpeed;
-        slowdownRate = ((dashSpeed - moveSpeed) * 2f);  //Higher scalar = velocity will decrease faster/sooner
+        slowdownRate = ((dashSpeed - moveSpeed) * slowdownScalar);  //Higher scalar = velocity will decrease faster/sooner
         sprite = GetComponent<SpriteRenderer>();
     }
     void Update()
