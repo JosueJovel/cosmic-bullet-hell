@@ -82,3 +82,4 @@ working yet. Needs to be added to a more global object besides the player.
 Art:
 
 Spaceship Sprites: By Gisha, https://gisha.itch.io/spaceships-asset-pack
+Backgrounds: By Screaming Brain Studios, https://gisha.itch.io/spaceships-asset-pack

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovementSmoothed : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
 
@@ -16,6 +16,7 @@ public class PlayerMovementSmoothed : MonoBehaviour
     private Vector2 smoothedDirection;  //Vector that will represent the intermediary vector between changing directions
     private Vector2 smoothedVelocity;   //Vector required for the Smoothdamp function to use as a reference for calculations
     public float rateOfDirectionChange = .007f;  //How fast to transition between vectors (in seconds)
+    
 
 
 
@@ -113,5 +114,8 @@ public class PlayerMovementSmoothed : MonoBehaviour
         if (dashCooldownCountdown > 0) {   //Keeps track/counts down of how long the dash cooldown has left. Also counts down every frame, same as above.
             dashCooldownCountdown -= Time.deltaTime;    
         }                                               //When the cooldown finally reaches 0, this if statement stops running, and dashing will be available to the player again.
+    }
+    public Vector2 getDirection() {
+        return rb.velocity;
     }
 }
