@@ -78,3 +78,7 @@ working yet. Needs to be added to a more global object besides the player.
 
 ### Homing Missile/Bomb
 ### Area Bomb
+
+Art:
+
+Spaceship Sprites: By Gisha, https://gisha.itch.io/spaceships-asset-pack

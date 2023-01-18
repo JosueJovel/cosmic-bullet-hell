@@ -178,6 +178,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3046935589420625562, guid: 2a1dc4a6d16a3564799b71bbf5761f8e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4b8a19420bf59fb419929645ed24cdfe, type: 3}
     m_RemovedComponents:
     - {fileID: 3046935589420625565, guid: 2a1dc4a6d16a3564799b71bbf5761f8e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 2a1dc4a6d16a3564799b71bbf5761f8e, type: 3}
@@ -325,8 +329,9 @@ MonoBehaviour:
   rb: {fileID: 412965376}
   rateOfDirectionChange: 0.007
   dashSpeed: 10
-  dashlength: 0.5
-  dashCooldown: 0.3
+  dashlength: 0.3
+  dashCooldown: 0.6
+  dashSlowdown: 1
 --- !u!1001 &637955525
 PrefabInstance:
   m_ObjectHideFlags: 0
