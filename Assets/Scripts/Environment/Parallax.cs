@@ -6,8 +6,8 @@ public class Parallax : MonoBehaviour
 {
     private Vector2 moveDirection;
     public float parallaxSpeed = 1f;
-    PlayerController playerController;    //Creates a new variable of the same class as the script to be referenced
-    [SerializeField] GameObject Player;   //This is here so that the object in question that is being referenced can be assigned to this script
+    PlayerController playerController;    //Creates a new variable to hold the player class/script, so that it's script can be referenced
+    [SerializeField] GameObject Player;   //This is here so that the object in question that is being referenced can be assigned to this script (The actual player game object in the scene)
     private Vector3 oldPosition;
     private Vector3 heading;
 
@@ -15,7 +15,7 @@ public class Parallax : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        playerController = Player.GetComponent<PlayerController>();  //From the object that was linked to this scipt, the player controller is extracted and copied here. //NOTE: May need to do this in update?
+        playerController = Player.GetComponent<PlayerController>();  //From the object that was linked to this scipt, the player controller is extracted and copied here.
         oldPosition = Player.transform.position;
     }
 
