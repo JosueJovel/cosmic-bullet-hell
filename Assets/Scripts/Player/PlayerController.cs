@@ -9,7 +9,6 @@ public class PlayerController : MonoBehaviour
     //GENERAL MOVEMENT
     public float moveSpeed = 5;  //a scalar that dictates how fast the player will move by default
     private float activeMoveSpeed;  //variable for player movement speed, because during gameplay the player's speed will change constantly
-    public Rigidbody2D rb;   //this is the player's own rigidbody component being referenced
     private Vector2 moveDirection;    //a vector that dictates the direction that player will be moving
 
     //SMOOTHDAMP
@@ -23,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     //DASH
     public float dashSpeed = 10;   //how much faster ship should move during a dash
-    public float dashlength = .5f;  //how long the dash should last
+    public float dashlength = .1f;  //how long the dash should last
     public float dashCooldown = .3f;  //how long to wait before being allowed to dash again
     public float dashSlowdown = 1f;   //length of the dash's "Slowdown" phase
     public float slowdownScalar = 2.4f;
@@ -33,8 +32,10 @@ public class PlayerController : MonoBehaviour
     private float slowdownRate;         //derived value dictating how much to slow down the player (per frame) during the slowdown part of the dash
    
    
-    //SPRITE
+    //COMPONENTS
     SpriteRenderer sprite;   //This is the player's own spirterendered component being referenced
+    PlayerHealth playerHealth;    //Creates a new variable to hold the player component/class/script, so that it's script can be referenced. 
+    public Rigidbody2D rb;   //this is the player's own rigidbody component being referenced
 
     // Update is called once per frame
 
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
         activeMoveSpeed = moveSpeed;
         slowdownRate = ((dashSpeed - moveSpeed) * slowdownScalar);  //Higher scalar = velocity will decrease faster/sooner
         sprite = GetComponent<SpriteRenderer>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
     void Update()
     {
@@ -81,10 +83,8 @@ public class PlayerController : MonoBehaviour
             if (dashCountdown <= 0 && dashCooldownCountdown <= 0) {    //A dash may only start if A. There is no dash currently ongoing, and B. The cooldown after a dash has ended.
                 dashSlowdownCountdown = 0;  //interrupts slowdown if still in progress
                 activeMoveSpeed = dashSpeed;
-                dashCountdown = dashlength;           
-                //TODO: WHen health system properly implemented, also implement invulnerability here. may need to give ship a new boolean state of "invulnerable: T or F"
-                //To do the above, will likely need to call  co routine here that seperately grants the player invulnerability. Note, teh invuln will last a little longer than the first phase of the dash
-                //GOAL: Make Invulnerability last about a third of a second. Because of smoothdamp behavior, may need to either shorten this phase of the dash length, or see if smoothdamp can kick in sooner.
+                dashCountdown = dashlength; 
+                StartCoroutine(playerHealth.DashingIframes()); //Upon tapping dash, the coroutine in the player health script is triggered. That coroutine grants invulnerability for some time
                 sprite.color = new Color (0, 0, 1, 1); //Changes player color while dashing, mostly used for testing reasons
             }
         }

@@ -6,8 +6,8 @@ public class Parallax : MonoBehaviour
 {
     private Vector2 moveDirection;
     public float parallaxSpeed = 1f;
-    PlayerController playerController;    //Creates a new variable to hold the player class/script, so that it's script can be referenced
-    [SerializeField] GameObject Player;   //This is here so that the object in question that is being referenced can be assigned to this script (The actual player game object in the scene)
+    PlayerController playerController;    //Creates a new variable to hold the player component/class/script, so that it's script can be referenced. 
+    [SerializeField] GameObject Player;   //This is here so that the object in question that is being referenced can be assigned to this script (The actual player game object in the scene). The actual attaching of the object to this variable is made manually in unity's inspector
     private Vector3 oldPosition;
     private Vector3 heading;
 
