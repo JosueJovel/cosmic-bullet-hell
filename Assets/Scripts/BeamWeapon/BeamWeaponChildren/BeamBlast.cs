@@ -19,12 +19,5 @@ public class BeamBlast : MonoBehaviour
         
     }
 
-    //This function destroys player on contact or collision. Because this beam uses isTrigger for collisions, it will automatically not have collision.
-    //This also removes the need for it to have a rigidbody of its own.
-
-    
-    private void OnTriggerEnter2D(Collider2D other) {
-        Destroy(other.gameObject); //Destruction/Damage will be handled on the player's end
-    }
 
 }
