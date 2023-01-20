@@ -19,12 +19,12 @@ public class BeamBlast : MonoBehaviour
         
     }
 
-    //This function destroys player on contact or collision. One of the objects must have a dynamic Rigidbody in order for this to work.
-    //In this case the player has the dynamic Rigidbody. When BeamBlast has a dynamic Rigidbody it gets knocked away when it's collided
-    //with because gravity works on dynamic rigidbodies.
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        Destroy(collision.gameObject);
+    //This function destroys player on contact or collision. Because this beam uses isTrigger for collisions, it will automatically not have collision.
+    //This also removes the need for it to have a rigidbody of its own.
+
+    
+    private void OnTriggerEnter2D(Collider2D other) {
+        Destroy(other.gameObject); //Destruction/Damage will be handled on the player's end
     }
 
 }
