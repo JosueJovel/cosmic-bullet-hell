@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
    
    
     //COMPONENTS
-    SpriteRenderer sprite;   //This is the player's own spirterendered component being referenced
+    //Note: Sprite is attached sperately, as a child to an object with this script attached to it. The reason for that is to allow sprite manipulation while keeping hitboxes consistent
     PlayerHealth playerHealth;    //Creates a new variable to hold the player component/class/script, so that it's script can be referenced. 
     public Rigidbody2D rb;   //this is the player's own rigidbody component being referenced
 
@@ -42,7 +42,6 @@ public class PlayerController : MonoBehaviour
     private void Start() {
         activeMoveSpeed = moveSpeed;
         slowdownRate = ((dashSpeed - moveSpeed) * slowdownScalar);  //Higher scalar = velocity will decrease faster/sooner
-        sprite = GetComponent<SpriteRenderer>();
         playerHealth = GetComponent<PlayerHealth>();
     }
     void Update()
@@ -79,13 +78,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void Dash() {
-        if (Input.GetButton("Fire1")){
+        if (Input.GetButtonDown("Fire1")){
             if (dashCountdown <= 0 && dashCooldownCountdown <= 0) {    //A dash may only start if A. There is no dash currently ongoing, and B. The cooldown after a dash has ended.
                 dashSlowdownCountdown = 0;  //interrupts slowdown if still in progress
                 activeMoveSpeed = dashSpeed;
                 dashCountdown = dashlength; 
                 StartCoroutine(playerHealth.DashingIframes()); //Upon tapping dash, the coroutine in the player health script is triggered. That coroutine grants invulnerability for some time
-                //sprite.color = new Color (0, 0, 1, 1); //Changes player color while dashing, mostly used for testing reasons
             }
         }
 
@@ -96,7 +94,6 @@ public class PlayerController : MonoBehaviour
 
             if (dashCountdown <= 0){                //Once the active part of the dash finally ends, gradually slow the player back to normal speed, and start the dash cooldown (to prevent dash abuse)
                 dashSlowdownCountdown = dashSlowdown;               
-                //sprite.color = new Color (1, 1, 1, 1);        //resets the player color, again for testing reasons       
                 dashCooldownCountdown = dashCooldown;                
             }
         }
