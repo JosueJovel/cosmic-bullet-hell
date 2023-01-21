@@ -12,44 +12,29 @@
 
 ------------------------------------------------------------------------
 #### In-depth
+COMPONENTS:
 
-- Sprite Renderer component (triangle sprite, but can be replaced with
-    other sprites)
-- Polygon Collider 2D (shaped into triangle, but can be shaped to
-    conform to other sprites)
+- Sprite Renderer component
+- Box Collider 2d
 - Player.cs script
+- PlayerHealth.cs script
+- Boundaries.cs script
 
-So far, the Player.cs script just controls movement and movement speed.
-Other functionality can be added in the future though.
-The speed variable can be adjusted within the Unity UI as well under the
-Player.cs script component.
 
-May add RigidBody2D component in future.
+The Player.cs script controls movement, as well as having a fully functional dodge/dash mechanic.
+PlayerHealth.cs script manages player health states, as well as invulnerability while dodging/after taking damage
+Many of the variables for these scripts can be tweaked in teh Unity Inspector
 
-Commented out code in Player.cs is a different implementation of the
-same functionality. Will probably remove in the future.
 
 ### Beam
 
-Made BeamWeapon prefab with it's children
+Made BeamWeapon prefab with it's children,
 AimingLaser and BeamBlast. More comments in the files themselves.
-The most information will be found in BeamWeapon.cs. BeamWeapon
-is working pretty well and follows the design set out. Values can be
-adjusted to change difficulty. Something that can be added is some sort
-of value that randomizes the firings of the different BeamWeapons so
-they don't all fire at the same time. BeamBlast.cs is what controls the
+The most information will be found in BeamWeapon.cs. Values can be
+adjusted to change difficulty. BeamBlast.cs is what controls the
 collision detection and destruction of the player object.
 
-Of note is that one of the objects when a collision happens must have
-a dynamic Rigidbody (as opposed to a static or kinematic). I gave the player
-object the dynamic rigidbody because if the BeamBlast has it then it gets
-knocked way when it's collided with, destroying the illusion that it's a
-laser.
-
-reference:
-https://needoneapp.medium.com/
-unity-should-i-choose-kinematic-
-static-or-dynamic-for-rigidbody-2d-body-type-191ce65fa35f
+Collisions are handled via Collider components, with the isTrigger option enabled.
 
 BeamWeapon (Parent class)
 AimingLaser (Child of BeamWeapon) - telegraphs where BeamBlast will occur.
@@ -61,9 +46,6 @@ Properties of Beam Weapon
 AimingLaserTimer - how long the the aiming laser will appear for
 BeamBlastTimer - how long the beam blast will appear for
 Interval - interval between beam weapon firings
-
-Also, added small script to give the player infinite lives, but it isn't
-working yet. Needs to be added to a more global object besides the player.
 
 ## To Be Added
 
