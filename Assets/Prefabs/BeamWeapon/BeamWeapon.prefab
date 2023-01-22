@@ -100,5 +100,5 @@ MonoBehaviour:
   BeamBlast: {fileID: 1558535373529016892, guid: a56b2411ec4cff64d86ba406736056e6, type: 3}
   AimingLaser: {fileID: 9015307283427820650, guid: 85212f4a92092c84c87e1bc04f0f674d, type: 3}
   MuzzleLocation: {x: 0, y: -5.25, z: 0}
-  BeamBlastTimer: 0.5
+  BeamBlastTimer: 0.1
   Interval: 1
